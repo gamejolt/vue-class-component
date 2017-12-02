@@ -307,13 +307,4 @@ describe('vue-class-component', () => {
     const vm: any = new MyComp()
     expect(vm.test).to.equal('foo')
   })
-  	
-  it('forwardStatics', function () {
-    @Component
-    class MyComp extends Vue {
-      static myValue = 52
-    }
-    
-    expect(MyComp.myValue).to.equal(52);
-  })
 })
