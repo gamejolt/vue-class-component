@@ -120,13 +120,7 @@ function componentFactory(Component, options) {
     var Super = superProto instanceof Vue
         ? superProto.constructor
         : Vue;
-    var Extended = Super.extend(options);
-    for (var staticKey in Component) {
-        if (Component.hasOwnProperty(staticKey)) {
-            Extended[staticKey] = Component[staticKey];
-        }
-    }
-    return Extended;
+    return Super.extend(options);
 }
 
 function Component(options) {
