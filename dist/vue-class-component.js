@@ -121,12 +121,11 @@ function componentFactory(Component, options) {
         ? superProto.constructor
         : Vue;
     var Extended = Super.extend(options);
-    Object.getOwnPropertyNames(Component).forEach(function (key) {
-        if (key !== 'prototype') {
-            var descriptor = Object.getOwnPropertyDescriptor(Component, key);
-            Object.defineProperty(Extended, key, descriptor);
+    for (var staticKey in Component) {
+        if (Component.hasOwnProperty(staticKey)) {
+            Extended[staticKey] = Component[staticKey];
         }
-    });
+    }
     return Extended;
 }
 
