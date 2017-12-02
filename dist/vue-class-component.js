@@ -114,17 +114,19 @@ function componentFactory(Component, options) {
     var decorators = Component.__decorators__;
     if (decorators) {
         decorators.forEach(function (fn) { return fn(options); });
+        delete Component.__decorators__;
     }
     var superProto = Object.getPrototypeOf(Component.prototype);
     var Super = superProto instanceof Vue
         ? superProto.constructor
         : Vue;
     var Extended = Super.extend(options);
-    for (var staticKey in Component) {
-        if (Component.hasOwnProperty(staticKey)) {
-            Extended[staticKey] = Component[staticKey];
+    Object.getOwnPropertyNames(Component).forEach(function (key) {
+        if (key !== 'prototype') {
+            var descriptor = Object.getOwnPropertyDescriptor(Component, key);
+            Object.defineProperty(Extended, key, descriptor);
         }
-    }
+    });
     return Extended;
 }
 
